@@ -1,2 +1,3 @@
-# searchpokemon
-search-pokemon application
+Search Pokémon Profile App
+
+Developed by : Sahagan Nuytoom
