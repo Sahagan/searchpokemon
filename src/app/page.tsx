@@ -1,10 +1,22 @@
+'use client'
+//HEAD
+import Head from 'next/head';
+
 import Image from 'next/image'
 import styles from './page.module.css'
-
+import { useState } from 'react';
 //images
 import pikachu from '../assets/pikachu.gif'
 
 export default function Home() {
+  const [showImage, setShowImage] = useState(true);
+  const [inputValue, setInputValue] = useState('');
+  const handleImageClick = () => {
+    setShowImage(false);
+  };
+  const handleInputChange = (name: any) => {
+    setInputValue(name.target.value);
+  };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -14,15 +26,34 @@ export default function Home() {
         <p className={styles.description}>
           Get ready to explore and discover your favorite Pokémon profiles!
         </p>
-        <Image
-            src={pikachu}
-            alt="Pikachu"
-            className={styles.image}
-        />
+        <div className={styles.content}>
+          {showImage && (
+            <div className={styles.imageContainer}>
+              <Image
+                src={pikachu}
+                alt="Pikachu"
+                className={styles.image}
+                onClick={handleImageClick}
+              />
+              <p className={styles.clickMessage} onClick={handleImageClick}>Click me to continue</p>
+            </div>
+          )}
+          {!showImage && (
+            <input
+              type="text"
+              value={inputValue}
+              className={styles.input}
+              onChange={handleInputChange}
+              placeholder="Enter Pokemon Name.."
+            />
+          )}
+        </div>
       </main>
       <footer className={styles.footer}>
         develop by Sahagan Nuytoom
       </footer>
     </div>
   )
-}
+};
+
+
