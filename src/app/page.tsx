@@ -1,6 +1,4 @@
 'use client'
-//HEAD
-import Head from 'next/head';
 
 import Image from 'next/image'
 import styles from './page.module.css'
@@ -15,8 +13,6 @@ export default function Home() {
   const [showInput, setShowInput] = useState(false);
   //dropdown
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('');
-
 
   const [showContent, setShowContent] = useState(false);
   const [showNotfound, setShowNotfound] = useState(false);
@@ -71,9 +67,9 @@ export default function Home() {
     setShowContent(true);
   };
   const onEvolution = async (pokemonDetail: any) => {
-    await setShowDetailContent(false);
     if (pokemonDetail.evolutions) {
       await (onSearchPokemon(pokemonDetail.evolutions[0].name));
+      await setShowDetailContent(false);
     } else {
       alert(`${pokemonDetail.name} can not evolve.`)
     }
@@ -188,7 +184,8 @@ export default function Home() {
                 <p><span className={styles.key}>fleeRate:</span> {pokemonDetail.fleeRate}</p>
                 <p><span className={styles.key}>maxCP:</span> {pokemonDetail.maxCP}</p>
                 <p><span className={styles.key}>maxHP:</span> {pokemonDetail.maxHP}</p>
-                <p><span className={styles.key}>evolution:</span> <span className={styles.evolution} onClick={() => onEvolution(pokemonDetail)}>{!pokemonDetail.evolutions[0].name
+                <p><span className={styles.key}>evolution:</span> <span className={styles.evolution} onClick={() => onEvolution(pokemonDetail)}>{
+                  !pokemonDetail.evolutions
                   ? `no more evolution`
                   : pokemonDetail.evolutions[0].name}</span></p>
               </div>
