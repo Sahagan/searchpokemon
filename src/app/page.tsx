@@ -32,7 +32,11 @@ export default function Home() {
   const handleInputChange = (name: any) => {
     setInputValue(name.target.value);
   };
-  const handleDropdownItemClick = (selectedName:any) => {//dropdown
+
+  const onToggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+  const handleDropdownItemClick = (selectedName: any) => {//dropdown
     setInputValue(selectedName);
     setShowDropdown(false);
   };
@@ -46,6 +50,7 @@ export default function Home() {
     setShowInput(true);
   };
   const onSearchPokemon = async (inputValue: any) => {
+    setShowDropdown(false);
     let findData = pokemons.find((pokemon: any) => pokemon.name.toLowerCase() === inputValue.toLowerCase()); //pokemon in pokemon array
     if (!findData) {
       setShowInput(false)
@@ -102,14 +107,16 @@ export default function Home() {
                 className={styles.input}
                 onChange={handleInputChange}
                 placeholder="Enter Pokémon Name.."
-                onFocus={() => setShowDropdown(true)}
               />
               <button onClick={() => onSearchPokemon(inputValue)}>Proceed</button>
+              <div className={styles.listBtn}>
+                <button onClick={() => onToggleDropdown()}>lists</button>
+              </div>
             </div>
           )}
           {showDropdown && (
             <div className={styles.dropdownContent}>
-              {pokemons.map((pokemon:any, index:number) => (
+              {pokemons.map((pokemon: any, index: number) => (
                 <div
                   key={index}
                   onClick={() => handleDropdownItemClick(pokemon.name)}
