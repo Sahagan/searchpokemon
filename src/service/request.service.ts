@@ -55,6 +55,6 @@ export async function getPokemon(id: string,name: string) {
     if(!data){
         return `not found`
     }else{
-        return data.pokemons;
+        return data.pokemon;
     };
 }

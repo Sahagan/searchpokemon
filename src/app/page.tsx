@@ -15,7 +15,7 @@ export default function Home() {
   const [showInput, setShowInput] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [showNotfound, setShowNotfound] = useState(false);
-
+  let [pokemonDetail, setPokemonDetail] = useState<any>('');
 
   const handleImageClick = async () => {
     await setShowImage(false);
@@ -31,17 +31,18 @@ export default function Home() {
   }
   const onSearchPokemon = async (inputValue: any) => {
     let pokemons: any = await getAllPokemon();
-    let pokemonData = pokemons.find((pokemon: any) => pokemon.name === inputValue); //pokemon in pokemon array
-    if(!pokemonData){
+    let {id,name} = pokemons.find((pokemon: any) => pokemon.name.toLowerCase() === inputValue.toLowerCase()); //pokemon in pokemon array
+    if (!id || !name) {
       setShowInput(false)
       setShowNotfound(true);
-    }else{
-      let {id,name} = pokemonData;
+    } else {
       setShowInput(false);
       setShowContent(true);
-      console.log(`id : ${id} name : ${name}`);
+      let seachPokemon = await getPokemon(id,name);
+      setPokemonDetail(seachPokemon);
     };
   };
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -77,13 +78,20 @@ export default function Home() {
           )}
           {showNotfound && (
             <div className={styles.notfoundContainer}>
-                no pokemon name's {inputValue} in database
-                <button onClick={onCloseNotfound}>Ok</button>
+              no pokemon name's {inputValue} in database
+              <button onClick={onCloseNotfound}>Ok</button>
             </div>
           )}
           {showContent && (
             <div className={styles.contentContainer}>
-              Pokemon Card
+              <p className={styles.Name}>{pokemonDetail.name}</p>
+              <Image
+                src={pokemonDetail.image}
+                alt="pokemon"
+                className={styles.pokemonImage}
+                width={150}
+                height={200}
+              />
             </div>
           )}
         </div>
