@@ -36,6 +36,31 @@ export async function getPokemon(id: string,name: string) {
                 minimum
                 maximum
               }
+              attacks{
+                fast{
+                  name
+                  type
+                  damage
+                }
+                special{
+                  name
+                  type
+                  damage
+                }
+              }
+              evolutions{
+                id
+                number
+                name
+                classification
+                types
+                resistant
+                weaknesses
+                fleeRate
+                maxCP
+                maxHP
+                image
+              }
               classification
               types
               resistant

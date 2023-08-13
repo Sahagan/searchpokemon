@@ -77,10 +77,6 @@
   border-color: black;
 }
 
-.contentContainer {
-  width: 20rem;
-  height: 10rem;
-}
 
 .notfoundContainer {
   justify-content: center;
@@ -103,6 +99,8 @@
 }
 
 .contentContainer {
+  width: 20rem;
+  height: 10rem;
   border-radius: 2rem;
   border-color: black;
   border-style: solid;
@@ -111,6 +109,116 @@
   background-color: white;
   color: black;
 }
+
+.Name {
+  margin-top: 1rem;
+}
+
+.contentDetailContainer {
+  border-radius: 2rem;
+  border: 2px solid black;
+  margin-top: 3rem;
+  max-height: 30rem;
+  width: 60rem;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  position: relative;
+}
+
+.contentDetailContainer .Name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.contentDetailContainer .pokemonDetail {
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  text-align: left;
+}
+
+.contentDetailContainer .pokemonDetail p {
+  margin-bottom: 1rem;
+}
+
+.contentDetailContainer .key {
+  font-weight: bold;
+}
+
+.backContentBtn {
+  position: absolute;
+  display: flex;
+  font-family: "Pokemon GB";
+  padding: 0.625rem;
+  border-radius: 2rem;
+  width: 5rem;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  margin-top: 2rem;
+  transform: translateX(550%);
+}
+
+.imagePokemon {
+  margin-top: 2rem;
+}
+
+.typePokemon {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  font-weight: bolder;
+}
+
+.typeValue {
+  margin-top: 1rem;
+  font-weight: lighter;
+}
+
+.detailBtn {
+  font-size: 0.75rem;
+  display: flex;
+  font-family: "Pokemon GB";
+  padding: 0.625rem;
+  border-radius: 2rem;
+  width: 10rem;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  transform: translateX(50%);
+  margin-top: 1rem;
+}
+
+.evolveBtn {
+  font-size: 0.75rem;
+  position: absolute;
+  display: flex;
+  font-family: "Pokemon GB";
+  padding: 0.625rem;
+  border-radius: 2rem;
+  width: 10rem;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  transform: translateX(50%);
+  margin-top: 1rem;
+}
+
+.closeContentBtn {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  font-family: "Pokemon GB";
+  padding: 0.625rem;
+  border-radius: 2rem;
+  width: 5rem;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  margin-bottom: 5rem;
+  transform: translateX(150%);
+}
+
 .footer {
   display: flex;
   justify-content: center;

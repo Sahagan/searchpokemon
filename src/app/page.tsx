@@ -15,9 +15,12 @@ export default function Home() {
   const [showInput, setShowInput] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [showNotfound, setShowNotfound] = useState(false);
+  const [pokemons, setPokemons] = useState<any>('');
   let [pokemonDetail, setPokemonDetail] = useState<any>('');
+  const [showDetailContent, setShowDetailContent] = useState(false);
 
   const handleImageClick = async () => {
+    await setPokemons(await getAllPokemon());
     await setShowImage(false);
     await setShowInput(true);
   };
@@ -28,19 +31,37 @@ export default function Home() {
   const onCloseNotfound = () => {
     setShowNotfound(false);
     setShowInput(true);
-  }
+  };
+  const onCloseContent = () => {
+    setShowContent(false);
+    setShowInput(true);
+  };
   const onSearchPokemon = async (inputValue: any) => {
-    let pokemons: any = await getAllPokemon();
-    let {id,name} = pokemons.find((pokemon: any) => pokemon.name.toLowerCase() === inputValue.toLowerCase()); //pokemon in pokemon array
-    if (!id || !name) {
+    let findData = pokemons.find((pokemon: any) => pokemon.name.toLowerCase() === inputValue.toLowerCase()); //pokemon in pokemon array
+    if (!findData) {
       setShowInput(false)
       setShowNotfound(true);
     } else {
+      let seachPokemon = await getPokemon(findData.id, findData.name);
+      setPokemonDetail(seachPokemon);
       setShowInput(false);
       setShowContent(true);
-      let seachPokemon = await getPokemon(id,name);
-      setPokemonDetail(seachPokemon);
     };
+  };
+  const onDetail = async () => {
+    setShowContent(false);
+    setShowDetailContent(true);
+  };
+  const onBack = () => {
+    setShowDetailContent(false);
+    setShowContent(true);
+  };
+  const onEvolution = async (pokemonDetail:any) => {
+    if(pokemonDetail.evolutions){
+      await(onSearchPokemon(pokemonDetail.evolutions[0].name));
+    }else{
+      alert(`${pokemonDetail.name} can not evolve.`)
+    }
   };
 
   return (
@@ -85,14 +106,62 @@ export default function Home() {
           {showContent && (
             <div className={styles.contentContainer}>
               <p className={styles.Name}>{pokemonDetail.name}</p>
-              <Image
-                src={pokemonDetail.image}
-                alt="pokemon"
-                className={styles.pokemonImage}
-                width={150}
-                height={200}
-              />
+              <div className={styles.imagePokemon}>
+                <Image
+                  src={pokemonDetail.image}
+                  alt="pokemon"
+                  className={styles.pokemonImage}
+                  width={150}
+                  height={200}
+                />
+              </div>
+              <div className={styles.typePokemon}>
+                <p>type</p>
+                <p className={styles.typeValue}>
+                  {pokemonDetail.types.length === 1
+                  ? pokemonDetail.types[0]
+                  : pokemonDetail.types.join(' ')}
+                </p>
+              </div>
+              <button className={styles.detailBtn} onClick={onDetail}>details</button> 
+              <button className={styles.evolveBtn} onClick={() => onEvolution(pokemonDetail)}>evolution</button> 
+              <button className={styles.closeContentBtn} onClick={onCloseContent}>Close</button>
             </div>
+          )}
+          {showDetailContent && (
+            <div className={styles.contentDetailContainer}>
+            <p className={styles.Name}>{pokemonDetail.name}</p>
+            <div className={styles.pokemonDetail}>
+              <p><span className={styles.key}>weight:</span> {pokemonDetail.weight.minimum} to {pokemonDetail.weight.maximum}</p>
+              <p><span className={styles.key}>height:</span> {pokemonDetail.height.minimum} to {pokemonDetail.height.maximum}</p>
+              <div className={styles.attackDetail}>
+                <div>
+                  <p className={styles.key}>Fast Attacks</p>
+                  {pokemonDetail.attacks.fast.map((attack:any, index:any) => (
+                    <p key={index}>{attack.name} (Type: {attack.type}, Damage: {attack.damage})</p>
+                  ))}
+                </div>
+                <div>
+                  <p className={styles.key}>Special Attacks</p>
+                  {pokemonDetail.attacks.special.map((attack:any, index:any) => (
+                    <p key={index}>{attack.name} (Type: {attack.type}, Damage: {attack.damage})</p>
+                  ))}
+                </div>
+              </div>
+              <p><span className={styles.key}>classification:</span> {pokemonDetail.classification}</p>
+              <p><span className={styles.key}>resistant:</span> {pokemonDetail.resistant.length === 1
+                  ? pokemonDetail.resistant[0]
+                  : pokemonDetail.resistant.join(',')}</p>
+              <p><span className={styles.key}>weaknesses:</span> {pokemonDetail.weaknesses.length === 1
+                  ? pokemonDetail.weaknesses[0]
+                  : pokemonDetail.weaknesses.join(',')}</p>
+              <p><span className={styles.key}>fleeRate:</span> {pokemonDetail.fleeRate}</p>
+              <p><span className={styles.key}>maxCP:</span> {pokemonDetail.maxCP}</p>
+              <p><span className={styles.key}>maxHP:</span> {pokemonDetail.maxHP}</p>
+            </div>
+            <button className={styles.backContentBtn} onClick={onBack}>Back</button>
+          </div>
+          
           )}
         </div>
       </main>
