@@ -7,11 +7,13 @@ import styles from './page.module.css'
 import { useState } from 'react';
 //images
 import pikachu from '../assets/pikachu.gif'
+import { getAllPokemon } from '@/service/request.service';
 
 export default function Home() {
   const [showImage, setShowImage] = useState(true);
   const [inputValue, setInputValue] = useState('');
-  const handleImageClick = () => {
+  const handleImageClick = async () => {
+    await getAllPokemon();
     setShowImage(false);
   };
   const handleInputChange = (name: any) => {
@@ -48,7 +50,7 @@ export default function Home() {
               value={inputValue}
               className={styles.input}
               onChange={handleInputChange}
-              placeholder="Enter Pokemon Name.."
+              placeholder="Enter Pokémon Name.."
             />
             <button  onClick={onSearchPokemon}>Proceed</button>
             </div>
