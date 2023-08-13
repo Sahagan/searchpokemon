@@ -17,6 +17,9 @@ export default function Home() {
   const handleInputChange = (name: any) => {
     setInputValue(name.target.value);
   };
+  const onSearchPokemon = () => {
+
+  };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -39,6 +42,7 @@ export default function Home() {
             </div>
           )}
           {!showImage && (
+            <div className={styles.inputContainer}>
             <input
               type="text"
               value={inputValue}
@@ -46,6 +50,8 @@ export default function Home() {
               onChange={handleInputChange}
               placeholder="Enter Pokemon Name.."
             />
+            <button  onClick={onSearchPokemon}>Proceed</button>
+            </div>
           )}
         </div>
       </main>

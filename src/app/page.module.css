@@ -42,15 +42,35 @@
   cursor: pointer;
 }
 
-
-.input {
+.inputContainer {
   margin-top: 5rem;
+  padding: 0.625rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputContainer input {
+  font-family: "Pokemon GB";
+  font-size: 0.75rem;
+  border: 0.2rem solid black;
+  background-color: white; 
+  border-radius:  0.625rem;
+  border-color: black;
+  color: black;
   width: 18.75rem; 
   height: 2.5rem; 
+  font-weight: bolder;
+  padding-left: 1rem;
+}
+
+.inputContainer button {
+  font-family: "Pokemon GB";
   padding: 0.625rem;
-  font-size: 1.2rem;
-  border: 0.2rem solid black; 
-  border-radius:  0.625rem;
+  display: flex;
+  margin-top: 1rem;
+  transform: translateX(75%);
+  border-radius: 2rem;
+  border-color: black;
 }
 
 .footer {
