@@ -71,6 +71,7 @@ export default function Home() {
     setShowContent(true);
   };
   const onEvolution = async (pokemonDetail: any) => {
+    await setShowDetailContent(false);
     if (pokemonDetail.evolutions) {
       await (onSearchPokemon(pokemonDetail.evolutions[0].name));
     } else {
@@ -187,8 +188,13 @@ export default function Home() {
                 <p><span className={styles.key}>fleeRate:</span> {pokemonDetail.fleeRate}</p>
                 <p><span className={styles.key}>maxCP:</span> {pokemonDetail.maxCP}</p>
                 <p><span className={styles.key}>maxHP:</span> {pokemonDetail.maxHP}</p>
+                <p><span className={styles.key}>evolution:</span> <span className={styles.evolution} onClick={() => onEvolution(pokemonDetail)}>{!pokemonDetail.evolutions[0].name
+                  ? `no more evolution`
+                  : pokemonDetail.evolutions[0].name}</span></p>
               </div>
-              <button className={styles.backContentBtn} onClick={onBack}>Back</button>
+              <div className={styles.backContentBtn}>
+                <button onClick={onBack}>Back</button>
+              </div>
             </div>
 
           )}
