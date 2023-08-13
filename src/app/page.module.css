@@ -73,6 +73,31 @@
   border-color: black;
 }
 
+.contentContainer {
+  width: 20rem;
+  height: 10rem;
+}
+
+.notfoundContainer {
+  justify-content: center;
+  align-items: center; 
+  font-weight: bolder;
+  color: black;
+  margin-top: 6.5rem;
+}
+
+.notfoundContainer button{
+  font-family: "Pokemon GB";
+  padding: 0.625rem;
+  border-radius: 2rem;
+  display: flex;
+  width: 5rem;
+  margin-top: 1rem;
+  justify-content: center;
+  transform: translateX(300%);
+  border-color: black;
+}
+
 .footer {
   display: flex;
   justify-content: center;

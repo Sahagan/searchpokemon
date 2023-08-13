@@ -7,20 +7,40 @@ import styles from './page.module.css'
 import { useState } from 'react';
 //images
 import pikachu from '../assets/pikachu.gif'
-import { getAllPokemon } from '@/service/request.service';
+import { getAllPokemon, getPokemon } from '@/service/request.service';
 
 export default function Home() {
   const [showImage, setShowImage] = useState(true);
   const [inputValue, setInputValue] = useState('');
+  const [showInput, setShowInput] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [showNotfound, setShowNotfound] = useState(false);
+
+
   const handleImageClick = async () => {
-    await getAllPokemon();
-    setShowImage(false);
+    await setShowImage(false);
+    await setShowInput(true);
   };
   const handleInputChange = (name: any) => {
     setInputValue(name.target.value);
   };
-  const onSearchPokemon = () => {
 
+  const onCloseNotfound = () => {
+    setShowNotfound(false);
+    setShowInput(true);
+  }
+  const onSearchPokemon = async (inputValue: any) => {
+    let pokemons: any = await getAllPokemon();
+    let pokemonData = pokemons.find((pokemon: any) => pokemon.name === inputValue); //pokemon in pokemon array
+    if(!pokemonData){
+      setShowInput(false)
+      setShowNotfound(true);
+    }else{
+      let {id,name} = pokemonData;
+      setShowInput(false);
+      setShowContent(true);
+      console.log(`id : ${id} name : ${name}`);
+    };
   };
   return (
     <div className={styles.container}>
@@ -43,16 +63,27 @@ export default function Home() {
               <p className={styles.clickMessage} onClick={handleImageClick}>Click me to continue</p>
             </div>
           )}
-          {!showImage && (
+          {showInput && (
             <div className={styles.inputContainer}>
-            <input
-              type="text"
-              value={inputValue}
-              className={styles.input}
-              onChange={handleInputChange}
-              placeholder="Enter Pokémon Name.."
-            />
-            <button  onClick={onSearchPokemon}>Proceed</button>
+              <input
+                type="text"
+                value={inputValue}
+                className={styles.input}
+                onChange={handleInputChange}
+                placeholder="Enter Pokémon Name.."
+              />
+              <button onClick={() => onSearchPokemon(inputValue)}>Proceed</button>
+            </div>
+          )}
+          {showNotfound && (
+            <div className={styles.notfoundContainer}>
+                no pokemon name's {inputValue} in database
+                <button onClick={onCloseNotfound}>Ok</button>
+            </div>
+          )}
+          {showContent && (
+            <div className={styles.contentContainer}>
+              Pokemon Card
             </div>
           )}
         </div>

@@ -16,30 +16,45 @@ export async function getAllPokemon() {
       },
     });
 
-    return {
-        props: {
-            pokemons: data.pokemons
-        },
-    };
+    return data.pokemons;
 }
 
 
-export async function getStaticProps(name: string) {
+export async function getPokemon(id: string,name: string) {
     const { data } = await client.query({
         query: gql`
-        query Countries {
-          countries {
-            code
-            name
-            emoji
+        query pokemon($id: String, $name: String){
+            pokemon(id: $id, name: $name){
+              id
+              number
+              name
+              weight{
+                minimum
+                maximum
+              }
+              height{
+                minimum
+                maximum
+              }
+              classification
+              types
+              resistant
+              weaknesses
+              fleeRate
+              maxCP
+              maxHP
+              image
+            }
           }
-        }
       `,
+      variables: {
+        "id": id,
+        "name" : name
+      },
     });
-
-    return {
-        props: {
-            countries: data.countries.slice(0, 4),
-        },
+    if(!data){
+        return `not found`
+    }else{
+        return data.pokemons;
     };
 }
